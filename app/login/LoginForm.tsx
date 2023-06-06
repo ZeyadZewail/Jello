@@ -1,17 +1,27 @@
 "use client";
 
 import Spinner from "../../components/spinner/Spinner";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import usePocketBase from "../../helpers/usePocketBase";
 
 const LoginForm = () => {
-	const pb = usePocketBase();
+	const { pb, authStore } = usePocketBase();
 	const formRef = useRef(null);
 	const [form, setForm] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 	const { push } = useRouter();
+
+	useEffect(() => {
+		const attemptLogin = async () => {
+			if (pb?.authStore.isValid) {
+				push("/home");
+			}
+		};
+
+		attemptLogin();
+	}, []);
 
 	const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
 		const target = e.target as HTMLInputElement;

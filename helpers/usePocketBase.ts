@@ -11,14 +11,20 @@ const usePocketBase = () => {
 	const [authStore, setAuthStore] = useState<BaseAuthStore>();
 
 	useEffect(() => {
-		setAuthStore(pb.authStore);
+		const authenticate = async () => {
+			if (pb?.authStore.isValid) {
+				await pb.collection("users").authRefresh();
+			} else {
+				push("/login");
+			}
 
-		if (pathname === "/login") {
-			return;
-		}
-		if (!pb?.authStore.isValid) {
-			push("/login");
-		}
+			setAuthStore(pb.authStore);
+			if (pathname === "/login") {
+				return;
+			}
+		};
+
+		authenticate();
 	}, []);
 
 	return { pb, authStore };

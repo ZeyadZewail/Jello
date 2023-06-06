@@ -5,11 +5,13 @@ import usePocketBase from "../../helpers/usePocketBase";
 import Board from "../../types/Board";
 import BoardOption from "@/components/boardOption/BoardOption";
 import Spinner from "@/components/spinner/Spinner";
+import { useRouter } from "next/navigation";
 
 const BoardViewer = () => {
 	const { pb, authStore } = usePocketBase();
 	const [boards, setBoards] = useState<Board[]>();
 	const [loading, setLoading] = useState(true);
+	const { push } = useRouter();
 
 	useEffect(() => {
 		if (authStore?.model?.id) {
@@ -53,6 +55,14 @@ const BoardViewer = () => {
 						style={{ gridTemplateColumns: "repeat(auto-fit, 224px" }}>
 						{renderBoards()}
 					</div>
+					<button
+						className="bg-primary-button px-3 py-2 rounded-xl"
+						onClick={() => {
+							pb.authStore.clear();
+							push("/login");
+						}}>
+						Log Out
+					</button>
 				</>
 			);
 		}
