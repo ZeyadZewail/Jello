@@ -6,6 +6,7 @@ import Board from "../../types/Board";
 import BoardOption from "@/components/boardOption/BoardOption";
 import Spinner from "@/components/spinner/Spinner";
 import { useRouter } from "next/navigation";
+import LoadingWrapper from "@/hoc/LoadingWrapper";
 
 const BoardViewer = () => {
 	const { pb, authStore } = usePocketBase();
@@ -39,36 +40,26 @@ const BoardViewer = () => {
 		}
 	};
 
-	const conditionalRender = () => {
-		if (loading) {
-			return (
-				<div className="min-h-screen flex justify-center items-center">
-					<Spinner size={80} />
+	return (
+		<LoadingWrapper loading={loading} spinnerSize={80}>
+			<div className="flex min-h-screen w-full items-center flex-col md:gap-16 gap-8">
+				<h1 className="md:text-8xl text-4xl	text-center font-bold mt-20">{`Hi ${authStore?.model?.username}`}</h1>
+				<div
+					className="grid gap-6 lg:w-3/5 md:h-4/6 w-full px-4 justify-center items-center"
+					style={{ gridTemplateColumns: "repeat(auto-fit, 224px" }}>
+					{renderBoards()}
 				</div>
-			);
-		} else {
-			return (
-				<>
-					<h1 className="md:text-8xl text-4xl	text-center font-bold mt-20">{`Hi ${authStore?.model?.username}`}</h1>
-					<div
-						className="grid gap-6 lg:w-3/5 md:h-4/6 w-full px-4 justify-center items-center"
-						style={{ gridTemplateColumns: "repeat(auto-fit, 224px" }}>
-						{renderBoards()}
-					</div>
-					<button
-						className="bg-primary-button px-3 py-2 rounded-xl"
-						onClick={() => {
-							pb.authStore.clear();
-							push("/login");
-						}}>
-						Log Out
-					</button>
-				</>
-			);
-		}
-	};
-
-	return <div className="flex min-h-screen w-full items-center flex-col md:gap-16 gap-8">{conditionalRender()}</div>;
+				<button
+					className="bg-primary-button px-3 py-2 rounded-xl"
+					onClick={() => {
+						pb.authStore.clear();
+						push("/login");
+					}}>
+					Log Out
+				</button>
+			</div>
+		</LoadingWrapper>
+	);
 };
 
 export default BoardViewer;

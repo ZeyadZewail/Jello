@@ -9,7 +9,7 @@ const Spinner = ({ size }: { size: number }) => (
 			border: `${size / 8}px solid ${theme["primary"]}`,
 			borderTop: `${size / 8}px solid ${theme["primary-button"]}`,
 		}}
-		className="bg-transparent animate-spin"
+		className="bg-transparent animate-spin m-auto place-self-center"
 	/>
 );
 
