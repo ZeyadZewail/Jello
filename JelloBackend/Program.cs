@@ -1,4 +1,5 @@
 using JelloBackend.Data;
+using JelloBackend.Hubs;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,7 @@ builder.Services.AddSwaggerGen(options=>options.AddSignalRSwaggerGen());
 
 var app = builder.Build();
 app.UseCors("ClientPermission");
+app.MapHub<BoardControlHub>("/hubs/BoardControlHub");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

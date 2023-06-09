@@ -13,8 +13,8 @@ public class BoardControlHub : Hub
     
     public async Task RenameBoard(string boardId,string newName)
     {
-        DatabaseContext context = new DatabaseContext();
         Debug.Print("xdd");
+        DatabaseContext context = new DatabaseContext();
         Board? board = context.Boards.FirstOrDefault(b => b.id == int.Parse(boardId));
         if (board != null)
         {

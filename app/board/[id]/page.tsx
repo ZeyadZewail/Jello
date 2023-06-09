@@ -15,11 +15,13 @@ const BoardPage = ({ params }: { params: { id: string } }) => {
 	const [tempString, setTempString] = useState("");
 
 	const renameBoard = async () => {
-		if (connection && tempString !== "") {
-			try {
-				await connection.send("RenameBoard", { boardId: params.id, newName: tempString });
-			} catch (e) {
-				console.log(e);
+		if (connection) {
+			if (tempString !== "") {
+				try {
+					await connection.send("RenameBoard", { boardId: params.id, newName: tempString });
+				} catch (e) {
+					console.log(e);
+				}
 			}
 		} else {
 			alert("No connection to server yet.");
@@ -48,6 +50,12 @@ const BoardPage = ({ params }: { params: { id: string } }) => {
 		};
 
 		getBoards();
+
+		return () => {
+			if (connection) {
+				connection.stop();
+			}
+		};
 	}, [params.id]);
 
 	useEffect(() => {
@@ -71,7 +79,6 @@ const BoardPage = ({ params }: { params: { id: string } }) => {
 	return (
 		<LoadingWrapper loading={loading} spinnerSize={80}>
 			<div>boardpage {board?.id}</div>
-			{connection?.state}
 			<div className="flex gap-2">
 				<input
 					className="text-secondary"
