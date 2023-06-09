@@ -6,5 +6,5 @@ public record Column
 
     public string name { get; set; }
 
-    public ICollection<Element> Elements { get; set; } = null!;
+    public ICollection<Element> elements { get; set; } = null!;
 };

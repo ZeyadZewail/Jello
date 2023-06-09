@@ -4,9 +4,9 @@ namespace JelloBackend.Models;
 
 public class Board
 {
-    public int Id { get; set; }
+    public int id { get; set; }
     
-    public string title { get; set; }
+    public string name { get; set; }
 
-    public ICollection<Column> Columns { get; set; } = null!;
+    public ICollection<Column> columns { get; set; } = null!;
 };

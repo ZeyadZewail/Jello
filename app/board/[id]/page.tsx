@@ -1,39 +1,91 @@
 "use client";
 
-import usePocketBase from "@/helpers/usePocketBase";
+import LoadingWrapper from "@/hoc/LoadingWrapper";
 import Board from "@/types/Board";
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const BoardPage = ({
-	params,
-	searchParams,
-}: {
-	params: { id: string };
-	searchParams: { [key: string]: string | string[] | undefined };
-}) => {
-	const { pb, authStore } = usePocketBase();
+const BoardPage = ({ params }: { params: { id: string } }) => {
+	const [connection, setConnection] = useState<HubConnection>();
 	const [board, setBoard] = useState<Board>();
-	const [columns, setColumns] = useState<Column[]>([]);
 	const [loading, setLoading] = useState(true);
 	const { push } = useRouter();
 
-	useEffect(() => {
-		if (authStore?.model?.id) {
-			const getBoards = async () => {
-				const filterString = `id = "${params.id}"`;
+	const [tempString, setTempString] = useState("");
 
-				const resultList = await pb.collection("boards").getFirstListItem<Board>("");
-
-				setBoard(resultList);
-				setLoading(false);
-			};
-
-			getBoards();
+	const renameBoard = async () => {
+		if (connection && tempString !== "") {
+			try {
+				await connection.send("RenameBoard", { boardId: params.id, newName: tempString });
+			} catch (e) {
+				console.log(e);
+			}
+		} else {
+			alert("No connection to server yet.");
 		}
-	}, [authStore]);
+	};
 
-	return <div>boardpage {params.id}</div>;
+	useEffect(() => {
+		const getBoards = async () => {
+			const response = await fetch(`https://localhost:7174/api?id=${params.id}`, { method: "GET" });
+			const responseData = await response.json();
+			if (!response.ok) {
+				alert("NOT OK");
+				return;
+			}
+
+			setBoard(responseData);
+
+			const newConnection = new HubConnectionBuilder()
+				.withUrl("https://localhost:7174/hubs/BoardControlHub")
+				.withAutomaticReconnect()
+				.build();
+
+			setConnection(newConnection);
+
+			setLoading(false);
+		};
+
+		getBoards();
+	}, [params.id]);
+
+	useEffect(() => {
+		if (connection) {
+			connection
+				.start()
+				.then((result) => {
+					console.log("Connected!");
+
+					connection.on(params.id, (signalCommand) => {
+						if (signalCommand.commandName === "rename") {
+							setBoard({ ...board, name: signalCommand.newName } as Board);
+						}
+						console.log(signalCommand);
+					});
+				})
+				.catch((e) => console.log("Connection failed: ", e));
+		}
+	}, [connection]);
+
+	return (
+		<LoadingWrapper loading={loading} spinnerSize={80}>
+			<div>boardpage {board?.id}</div>
+			{connection?.state}
+			<div className="flex gap-2">
+				<input
+					className="text-secondary"
+					value={tempString}
+					onChange={(e) => {
+						setTempString(e.target.value);
+					}}
+				/>
+				<button onClick={renameBoard} className="bg-primary-button ">
+					Rename
+				</button>
+			</div>
+		</LoadingWrapper>
+	);
 };
 
 export default BoardPage;

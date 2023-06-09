@@ -1,4 +1,5 @@
 ﻿using JelloBackend.Data;
+using JelloBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,15 +7,41 @@ namespace JelloBackend.Controllers;
 
 
 
-[Route("/test")]
+[Route("/api")]
 [ApiController]
 public class TestController : Controller
 {
     DatabaseContext _context = new DatabaseContext();
 
     [HttpGet]
-    public ActionResult GetBoards()
+    public ActionResult GetBoard(string id)
     {
-        return Ok(_context.Boards.Include(b =>b.Columns).ThenInclude(c=>c.Elements));
+        try
+        {
+            return Ok(_context.Boards
+                .Include(b =>b.columns)
+                .ThenInclude(c=>c.elements)
+                .First(b=>b.id == int.Parse(id)));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return NotFound("Board not found");
+        }
+    }
+
+    [HttpPost]
+    public ActionResult CreateBoard(Board board)
+    {
+        try
+        {
+            
+            return Ok(board.id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return NotFound("Something Unexpected Happened");
+        }
     }
 }

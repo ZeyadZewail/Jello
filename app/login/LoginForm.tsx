@@ -3,10 +3,8 @@
 import Spinner from "../../components/spinner/Spinner";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import usePocketBase from "../../helpers/usePocketBase";
 
 const LoginForm = () => {
-	const { pb, authStore } = usePocketBase();
 	const formRef = useRef(null);
 	const [form, setForm] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
@@ -15,9 +13,9 @@ const LoginForm = () => {
 
 	useEffect(() => {
 		const attemptLogin = async () => {
-			if (pb?.authStore.isValid) {
-				push("/home");
-			}
+			// if (pb?.authStore.isValid) {
+			// 	push("/home");
+			// }
 		};
 
 		attemptLogin();
@@ -37,7 +35,7 @@ const LoginForm = () => {
 		}
 		setLoading(true);
 		try {
-			const authData = await pb.collection("users").authWithPassword(form.email, form.password);
+			// const authData = await pb.collection("users").authWithPassword(form.email, form.password);
 			push("/home");
 		} catch (error) {
 			setError("Wrong Email or Password");
