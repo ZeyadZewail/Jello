@@ -22,4 +22,59 @@
       <Folder Include="Migrations" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="AuthProvider\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="AuthProvider\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="AuthProvider\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="AuthProvider\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Account\AccessDenied.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Account\LoggedOut.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Account\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Account\Logout.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Consent\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Consent\_ScopeListItem.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Device\Success.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Device\UserCodeCapture.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Device\UserCodeConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Diagnostics\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Grants\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Shared\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Shared\Redirect.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Shared\_ScopeListItem.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\Shared\_ValidationSummary.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Views\_ViewStart.cshtml" />
+      <_ContentIncludedByDefault Remove="AuthProvider\appsettings.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\obj\AuthProvider.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\Properties\launchSettings.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\wwwroot\admin\documentation\search\search_index.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\wwwroot\admin\resources\de.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\wwwroot\admin\resources\en-GB.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\wwwroot\admin\resources\es.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\wwwroot\admin\resources\fr.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\wwwroot\admin\resources\locales.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\wwwroot\admin\resources\zh-CN.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\wwwroot\admin\resources\zh-TW.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\bin\Debug\netcoreapp3.1\appsettings.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\bin\Debug\netcoreapp3.1\AuthProvider.deps.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\bin\Debug\netcoreapp3.1\AuthProvider.runtimeconfig.dev.json" />
+      <_ContentIncludedByDefault Remove="AuthProvider\bin\Debug\netcoreapp3.1\AuthProvider.runtimeconfig.json" />
+    </ItemGroup>
+
 </Project>
