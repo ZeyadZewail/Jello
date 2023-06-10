@@ -10,21 +10,25 @@ namespace JelloBackend.Hubs;
 [SignalRHub]
 public class BoardControlHub : Hub
 {
+
+    private readonly DatabaseContext _context;
     
+    public BoardControlHub(DatabaseContext dbContext)
+    {
+        _context = dbContext;
+    }
     public async Task RenameBoard(string boardId,string newName)
     {
-        Debug.Print("xdd");
-        DatabaseContext context = new DatabaseContext();
-        Board? board = context.Boards.FirstOrDefault(b => b.id == int.Parse(boardId));
+        Board? board = _context.Boards.FirstOrDefault(b => b.id == int.Parse(boardId));
         if (board != null)
         {
 
             board.name = newName;
-            context.Update(board);
+            await _context.SaveChangesAsync();
             
             SignalCommand command = new SignalCommand();
             command.commandName = "rename";
-            command.payload = newName;
+            command.payload = board.name;
         
             await Clients.All.SendAsync(boardId,command);
             

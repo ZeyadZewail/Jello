@@ -18,7 +18,7 @@ const BoardPage = ({ params }: { params: { id: string } }) => {
 		if (connection) {
 			if (tempString !== "") {
 				try {
-					await connection.send("RenameBoard", { boardId: params.id, newName: tempString });
+					await connection.send("RenameBoard", params.id, tempString);
 				} catch (e) {
 					console.log(e);
 				}
@@ -67,7 +67,7 @@ const BoardPage = ({ params }: { params: { id: string } }) => {
 
 					connection.on(params.id, (signalCommand) => {
 						if (signalCommand.commandName === "rename") {
-							setBoard({ ...board, name: signalCommand.newName } as Board);
+							setBoard({ ...board, name: signalCommand.payload } as Board);
 						}
 						console.log(signalCommand);
 					});
@@ -78,7 +78,7 @@ const BoardPage = ({ params }: { params: { id: string } }) => {
 
 	return (
 		<LoadingWrapper loading={loading} spinnerSize={80}>
-			<div>boardpage {board?.id}</div>
+			<div>boardpage {board?.name}</div>
 			<div className="flex gap-2">
 				<input
 					className="text-secondary"
