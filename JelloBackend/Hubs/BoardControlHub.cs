@@ -27,7 +27,7 @@ public class BoardControlHub : Hub
             await _context.SaveChangesAsync();
             
             SignalCommand command = new SignalCommand();
-            command.commandName = "rename";
+            command.commandName = "renameBoard";
             command.payload = board.name;
         
             await Clients.All.SendAsync(boardId,command);
