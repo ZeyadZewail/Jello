@@ -36,3 +36,6 @@ next-env.d.ts
 
 #pocketbase
 /pb
+
+JelloBackend/AuthProvider/AspIdUsers.db
+JelloBackend/AuthProvider/IdentityServer.db

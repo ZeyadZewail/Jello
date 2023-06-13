@@ -9,7 +9,7 @@ namespace JelloBackend.Controllers;
 
 [Route("/api")]
 [ApiController]
-public class Controller : Microsoft.AspNetCore.Mvc.Controller
+public class BoardController : Microsoft.AspNetCore.Mvc.Controller
 {
     DatabaseContext _context = new DatabaseContext();
 
