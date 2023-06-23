@@ -17,7 +17,7 @@ const BoardPage = ({ params }: { params: { id: string } }) => {
 
 	useEffect(() => {
 		const getBoards = async () => {
-			const response = await fetch(`https://localhost:7174/api?id=${params.id}`, { method: "GET" });
+			const response = await fetch(`https://localhost:7174/GetBoard?id=${params.id}`, { method: "GET" });
 			const responseData = await response.json();
 			if (!response.ok) {
 				alert("NOT OK");

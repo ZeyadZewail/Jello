@@ -1,19 +1,16 @@
 ﻿using JelloBackend.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-
 
 namespace JelloBackend.Data;
 
 public class DatabaseContext : DbContext
 {
-    public DatabaseContext(){}
+    public DatabaseContext()
+    {
+    }
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
-        
     }
 
 

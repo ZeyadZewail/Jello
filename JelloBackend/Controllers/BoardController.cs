@@ -1,27 +1,27 @@
 ﻿using JelloBackend.Data;
 using JelloBackend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JelloBackend.Controllers;
 
-
-
 [Route("/api")]
 [ApiController]
-public class BoardController : Microsoft.AspNetCore.Mvc.Controller
+public class BoardController : Controller
 {
-    DatabaseContext _context = new DatabaseContext();
+    private readonly DatabaseContext _context = new();
 
+    [Route("/GetBoard")]
     [HttpGet]
     public ActionResult GetBoard(string id)
     {
         try
         {
             return Ok(_context.Boards
-                .Include(b =>b.columns)
-                .ThenInclude(c=>c.elements)
-                .First(b=>b.id == int.Parse(id)));
+                .Include(b => b.columns)
+                .ThenInclude(c => c.elements)
+                .First(b => b.id == int.Parse(id)));
         }
         catch (Exception e)
         {
@@ -30,12 +30,12 @@ public class BoardController : Microsoft.AspNetCore.Mvc.Controller
         }
     }
 
+    [Route("/CreateBoard")]
     [HttpPost]
     public ActionResult CreateBoard(Board board)
     {
         try
         {
-            
             return Ok(board.id);
         }
         catch (Exception e)
